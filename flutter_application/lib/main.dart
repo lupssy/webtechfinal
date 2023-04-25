@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/landingpage.dart';
-import 'package:flutter_application/testpage.dart';
+import 'package:flutter_application/login.dart';
+import 'package:flutter_application/homepage.dart';
+import 'package:flutter_application/signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.yellow,
       ),
-      home: LandingPage()
+      home: SignUp()
     );
   }
 }

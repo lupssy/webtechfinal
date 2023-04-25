@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application/login.dart';
+import 'package:flutter_application/models/UserModel.dart';
+import 'package:flutter_application/widgets/button.dart';
+import 'package:flutter_application/widgets/custom_textfield.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -9,97 +12,85 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller= TextEditingController();
+  TextEditingController namecontroller= TextEditingController();
+  TextEditingController idcontroller= TextEditingController();
+  TextEditingController dobcontroller= TextEditingController();
+  TextEditingController majorcontroller= TextEditingController();
+  TextEditingController yeargroupcontroller= TextEditingController();
+  TextEditingController favfoodcontroller= TextEditingController();
+  TextEditingController favmoviecontroller= TextEditingController();
+  TextEditingController residencecontroller= TextEditingController();
+
+
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
-    width: 1440,
-    height: 1024,
-    child: Material(
-        color: Colors.white,
-        child: Padding(
-            padding: const EdgeInsets.only(left: 250, right: 454, top: 42, bottom: 156, ),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
-                    Container(
-                        width: 144,
-                        height: 169,
-                        child: FlutterLogo(size: 144),
-                    ),
-                    SizedBox(height: 23),
-                    SizedBox(
-                        width: 532,
-                        height: 68,
-                        child: Text(
-                            "Already a member? Log in",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                            ),
-                        ),
-                    ),
-                    SizedBox(height: 23),
-                    SizedBox(
-                        width: 164,
-                        height: 67,
-                        child: Text(
-                            "email:",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                            ),
-                        ),
-                    ),
-                    SizedBox(height: 23),
-                    SizedBox(
-                        width: 532,
-                        height: 113,
-                        child: Material(
-                            color: Color(0xffd9d9d9),
-                            borderRadius: BorderRadius.circular(30),
-                        ),
-                    ),
-                    SizedBox(height: 23),
-                    SizedBox(
-                        width: 256,
-                        height: 80,
-                        child: Text(
-                            "password:",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                            ),
-                        ),
-                    ),
-                    SizedBox(height: 23),
-                    SizedBox(
-                        width: 532,
-                        height: 113,
-                        child: Material(
-                            color: Color(0xffd9d9d9),
-                            borderRadius: BorderRadius.circular(30),
-                        ),
-                    ),
-                    SizedBox(height: 23),
-                    SizedBox(
-                        width: 164,
-                        height: 78,
-                        child: Text(
-                            "sign in",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                            ),
-                        ),
-                    ),
-                ],
-            ),
-        ),
-    ),
+    return Center(
+      child: Scaffold(
+  body: SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+     Image.asset('images/connect.png'),
+              Text('Join the Connetikit family now! Sign up'),
+                SizedBox(height: 10,),
+      
+              Center(
+                child: Form(
+                  key: formkey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomTextField(controller: namecontroller, text: 'Name'),
+                      CustomTextField(controller: emailcontroller, text: 'Email'),
+                      CustomTextField(controller: idcontroller, text: 'StudentID'),
+                      CustomTextField(controller: dobcontroller, text: 'Date of Birth'),
+                      CustomTextField(controller: majorcontroller, text: 'Major'),
+                      CustomTextField(controller: yeargroupcontroller, text: 'Year group'),
+                      CustomTextField(controller: favfoodcontroller, text: 'Favourite Food'),
+                      CustomTextField(controller: favmoviecontroller, text: 'Favourite Movie'),
+                      CustomTextField(controller: residencecontroller, text: 'Campus Residency?'),
+                      CustomTextField(controller: passwordcontroller, text: 'Create Password'),
+                    ],
+                  ),
+                ),
+              ),
+                MyButton(onPressed: (){
+                 if(formkey.currentState!.validate()){
+                       UserModel userModel = UserModel(
+                        password: passwordcontroller.text,
+                          userID: idcontroller.text, 
+                          favFood: favfoodcontroller.text, 
+                          favMovie: favmoviecontroller.text, 
+                          dateOfBirth: dobcontroller.text, 
+                          yearGroup: yeargroupcontroller.text, 
+                          userName: namecontroller.text, 
+                          email: emailcontroller.text, 
+                          campusResidence: residencecontroller.text, 
+                     
+                          major: majorcontroller.text
+                          );
+                        // showDialog(context: context, builder: ((context) => const CustomLoader()));
+                         userModel.createtUserAccount(context);
+                         print('email:${emailcontroller.text}');
+                  
+                         
+
+
+                    }
+                   
+              }, text: 'SignUp'),
+              MyButton(onPressed: (){
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>  Login()));
+              }, text: 'Go to Log In' )
+                
+    ]),
+  ),
+)
 );
   }
 }

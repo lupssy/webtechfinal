@@ -81,6 +81,10 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application/login.dart';
+import 'package:flutter_application/signup.dart';
+import 'package:flutter_application/widgets/button.dart';
+import 'package:flutter_application/widgets/custom_scaffold_cover.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -92,92 +96,72 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Container(
-      width: 1440,
-      height: 1024,
-      color: Colors.white,
-      child: Stack(
-          children:[
-              Positioned(
-                  left: 635,
-                  top: 0,
-                  child: Container(
-                      width: 642,
-                      height: 1024,
-                      child: FlutterLogo(size: 642),
+    return Scaffold(
+        body: CustomScaffold(
+          child: Container(
+          width: 1440,
+          height: 1024,
+          color: Colors.white,
+          child: Stack(
+              children:[
+                  Positioned(
+                      left: 635,
+                      top: 0,
+                      child: Container(
+                          width: 642,
+                          height: 1024,
+                          child: Image.asset('images/wtpic.jpeg'),
+                      ),
                   ),
-              ),
-              Positioned(
-                  left: 160,
-                  top: 78,
-                  child: Container(
-                      width: 144,
-                      height: 169,
-                      child: FlutterLogo(size: 144),
+                  Positioned(
+                      left: 160,
+                      top: 78,
+                      child: Container(
+                          width: 144,
+                          height: 169,
+                          child: Image.asset('images/connect.png')
+                      ),
                   ),
-              ),
-              Positioned(
-                  left: 269,
-                  top: 374,
-                  child: SizedBox(
-                      width: 308,
-                      height: 253,
-                      child: Text(
-                          "Connect and network today on Connetikit",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 40,
+                  Positioned(
+                      left: 269,
+                      top: 374,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                              width: 308,
+                              height: 253,
+                              child: Text(
+                                  "Connect and network today on Connetikit",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 40,
+                                  ),
+                              ),
                           ),
+                        
+                          MyButton(onPressed: (){
+                            Navigator.pushAndRemoveUntil(
+                              context, MaterialPageRoute(
+                                builder:(context)=> const SignUp() ), (route) => false);
+                          }, text: 'SignUp'),
+                          SizedBox(height: 10,),
+                           MyButton(onPressed: (){
+                            Navigator.pushAndRemoveUntil(
+                              context, MaterialPageRoute(
+                                builder:(context)=> const Login() ), (route) => false);
+                          }, text: 'SignUp')
+                        ],
                       ),
                   ),
+                  
+                          
+                      
+                  
+              ],
+          ),
               ),
-              Positioned(
-                  left: 255,
-                  top: 879,
-                  child: Container(
-                      width: 265,
-                      height: 81,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Color(0xffd9d9d9),
-                      ),
-                      padding: const EdgeInsets.only(left: 59, right: 52, ),
-                      child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children:[
-                              Text(
-                                  "Signup",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                  ),
-                              ),
-                              SizedBox(width: 9),
-                              Text(
-                                  "\"",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                  ),
-                              ),
-                              SizedBox(width: 9),
-                              Text(
-                                  "login",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                  ),
-                              ),
-                          ],
-                      ),
-                  ),
-              ),
-          ],
-      ),
-    ),
+        ),
+      
     );
   }
 }
