@@ -92,7 +92,7 @@ class LandingPage extends StatefulWidget {
   @override
   State<LandingPage> createState() => _LandingPageState();
 }
-
+//LANDING PAGE DESIGN
 class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
@@ -101,15 +101,14 @@ class _LandingPageState extends State<LandingPage> {
           child: Container(
           width: 1440,
           height: 1024,
-          color: Colors.white,
           child: Stack(
               children:[
                   Positioned(
                       left: 635,
                       top: 0,
                       child: Container(
-                          width: 642,
-                          height: 1024,
+                          width: 600,
+                          height: 900,
                           child: Image.asset('images/wtpic.jpeg'),
                       ),
                   ),
@@ -138,7 +137,7 @@ class _LandingPageState extends State<LandingPage> {
                                   ),
                               ),
                           ),
-                        
+                        //BUTTON FOR LOG IN AND SIGN IN
                           MyButton(onPressed: (){
                             Navigator.pushAndRemoveUntil(
                               context, MaterialPageRoute(
@@ -149,7 +148,7 @@ class _LandingPageState extends State<LandingPage> {
                             Navigator.pushAndRemoveUntil(
                               context, MaterialPageRoute(
                                 builder:(context)=> const Login() ), (route) => false);
-                          }, text: 'SignUp')
+                          }, text: 'Login')
                         ],
                       ),
                   ),

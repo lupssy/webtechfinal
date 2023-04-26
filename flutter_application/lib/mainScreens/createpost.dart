@@ -15,14 +15,16 @@ class _CreatePostState extends State<CreatePost> {
     TextEditingController emailcontroller= TextEditingController();
     TextEditingController namecontroller =  TextEditingController();
   TextEditingController messagecontroller =  TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
         title: Text('Create Post'),),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
+        child: Center (child: 
+        Column(
+          children:[
              
                         CustomTextField(controller: emailcontroller, text: 'Email'),
                         CustomTextField(controller: namecontroller, text: 'Name'),
@@ -32,15 +34,16 @@ class _CreatePostState extends State<CreatePost> {
                     MyButton(onPressed: (){
                        PostModel post = PostModel(
                                           userName: namecontroller.text,
-                                          timestamp: DateTime.now(),
+                                          timestamp: 1,
 
                                           message: messagecontroller.text,
-                                           userEmail: emailcontroller.text, 
+                                           userEmail: emailcontroller.text, postID: '', 
                                        );
                                           post.createtUserPost(context);
                     }, text: 'Create')
         ]),
       ),
+      )
     );
   }
 }

@@ -55,7 +55,8 @@ class _LoginState extends State<Login> {
                     UserModel userdoc = await userModel.getUser(emailcontroller.text);
                    
                    //authentication logic
-                   //User email and id typed are compared with details gotten from firestore
+                   //User email and PASSWORD typed are compared with details gotten from firestore
+                   //if the user enters a false password error appears
                     if(
                       userdoc.email == emailcontroller.text
                       && userdoc.password == passwordcontroller.text){
@@ -64,7 +65,7 @@ class _LoginState extends State<Login> {
                         final prefs = await SharedPreferences.getInstance();
                         // Save user login session
                         await prefs.setString('userEmail', emailcontroller.text);
-                        print('successful');
+                        print('login successful');
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                          builder: (context)=>  HomePage(userModel: userModel,)), (route) => false);
                         }

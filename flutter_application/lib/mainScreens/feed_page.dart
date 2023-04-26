@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_application/mainScreens/createpost.dart';
 import 'package:flutter_application/models/PostModel.dart';
+import 'package:flutter_application/widgets/posttile.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -18,56 +19,84 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage> {
 
+
+
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-     _stream = getPosts();
+    setState(() {
+    _stream = getPosts();
+  
+    });
   }
-  late Stream<List<PostModel>> _stream;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController messageController= TextEditingController();
+  //final String pid = const Uuid().v4();
+   late Stream<List<PostModel>> _stream;
 
   Stream<List<PostModel>> getPosts() async* {
     while (true) {
+        print('searching post');
+
        var response = await http.get(
-    Uri.parse('http://127.0.0.1:5000/Posts'),
+    Uri.parse('https://webtech-final-384819.uc.r.appspot.com/Posts'),
     headers:  <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     
     },
     
     );
-   
-      final List<dynamic> data = jsonDecode(response.body);
-      final List<PostModel> posts = data.map((post) => PostModel.fromJson(post)).toList();
-      yield posts;
-      await Future.delayed(Duration(seconds: 5));
+    print('status ${response.statusCode}');
+    final List<dynamic> data =jsonDecode(response.body);
+    final List<PostModel> posts = data.map((post) => PostModel.fromJson(post)).toList();
+    yield posts;
+      // await Future.delayed(Duration(seconds: 5));
     }
+    
+  
   }
 
+  postTile(){
+    
+  }
 
-    getpostlist() {
+    postList() {
     return StreamBuilder(
       stream: _stream,
-      builder: (BuildContext context,  snapshot){
+      builder: (BuildContext context,  dynamic snapshot){
         if (snapshot.hasData) {
             List<Padding> postList = [];
-       final posts = snapshot.data;
-      for (var element in posts!) {
-        print('object1s');
+        final posts = snapshot.data;
+      for (var post in posts!) {
+        print('posts loaded');
 
        postList.add(Padding(
          padding: const EdgeInsets.all(8.0),
-         child: ListTile(
-          subtitle: Text(element.message), title: Text(element.userEmail)),
+
+         
+         child: MyWidget(
+          message: post.message,
+          userName: post.userName,
+          timeStamp: post.timestamp,
+          )
+          
        ));
       }
        return Column(children: postList ,);
           
       }
       else{
-        print('object');
+        print('post not available');
         return SizedBox.shrink();
       }
+
+    
+            // return ListView.builder(
+            //  // itemCount: posts!.length,
+            //   itemBuilder: (context, index) {
+            //     return Text('data');
+            //   });
       
     });
   }
@@ -89,7 +118,7 @@ class _FeedPageState extends State<FeedPage> {
               Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePost(),));
             },
           ),
-          getpostlist()
+          postList()
         ]),
 
     )));

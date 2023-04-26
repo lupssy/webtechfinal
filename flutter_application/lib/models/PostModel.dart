@@ -5,17 +5,19 @@ import 'package:http/http.dart' as http;
 
 
 
-var apiUrl = 'http://127.0.0.1:5000/Posts';
+var apiUrl = 'https://webtech-final-384819.uc.r.appspot.com/Posts';
 
 class PostModel{
+  final String postID;
   final String userEmail;
   final String userName;
   final String message;
-  final DateTime timestamp;
+  final double timestamp;
 
 
 
  PostModel({
+  required this.postID,
   required this.userName,
   required this.timestamp,
   required this.userEmail,
@@ -25,6 +27,7 @@ class PostModel{
 
 factory PostModel.fromJson(Map<String, dynamic> json){
   return PostModel(
+    postID: json['PostID'],
     userName: json['userName'],
     timestamp: json['timeStamp'], 
     userEmail: json['userEmail'], 
@@ -34,6 +37,7 @@ factory PostModel.fromJson(Map<String, dynamic> json){
 
   Map<String, dynamic> toMap() {
     return {
+      'postID': postID,
       'userName': userName,
       'userEmail': userEmail,
       'message': message,

@@ -139,7 +139,9 @@ class _HomePageState extends State<HomePage> {
       return  SizedBox(
         width: MediaQuery.of(context).size.width*0.8,
         height: MediaQuery.of(context).size.height,
-        child: const Scaffold(body: Center(child: Text('No information')),));
+          child:  Scaffold(body: Container
+          (child: Center(
+            child: Image.asset('images/homepic.png')))));
    }
   }
   @override
@@ -151,7 +153,7 @@ class _HomePageState extends State<HomePage> {
      
       child: Row(
         children: [
-                  Spacer(),
+                  //Spacer(),
 
           sidebar(),
           SizedBox(

@@ -20,9 +20,7 @@ class _ProfileState extends State<Profile> {
     height: 1024,
     child: CustomScaffold(child: Column(
       children: [
-        ElevatedButton(onPressed: (){
-Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(userModel: widget.userModel,)));
-        }, child: Text('Edit Profile')),
+      
         ListTile(
           title: Text('Name'),
           subtitle: Text(widget.userModel.userName),
@@ -55,6 +53,10 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(userM
           title: Text('Campus Residency?'),
           subtitle: Text(widget.userModel.campusResidence),
         ),
+        SizedBox(height:100),
+          ElevatedButton(onPressed: (){
+Navigator.push(context, MaterialPageRoute(builder: (context)=> EditProfile(userModel: widget.userModel,)));
+            }, child: Text('Edit Profile')),
       ],
     ))
 );

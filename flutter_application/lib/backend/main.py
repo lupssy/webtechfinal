@@ -17,7 +17,7 @@ from email.message import EmailMessage
 
 
 # initialise firebase
-cred = credentials.Certificate('social-project-144e7-firebase-adminsdk-v85r4-8f4d33c2d5.json')
+cred = credentials.Certificate('finalprojectwt-firebase-adminsdk-qkmrv-164ede3a63.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -94,7 +94,7 @@ def getAllUsers():
 
 
 # update user details
-@app.route('/Users/<userEmail>', methods=['POST'])
+@app.route('/Users/<userEmail>', methods=['PUT'])
 def updateUserDetails(userEmail):
     email = str(userEmail)
     
@@ -171,58 +171,5 @@ def getUserPostDetails(userEmail):
     return json.dumps(postlist), 201
 
 
-# # delete user post
-# @app.route('/Posts/<postID>', methods=['DELETE'])
-# def deletePost(postID):
-#     postid = str(postID)
-#     if not postRef.document(postid).get().exists:
-#         return jsonify({'error': 'user not found'}), 404
-
-#     # Delete user   
-#     postRef.document(postid).delete()
-#     return jsonify({'message': 'Post successful Deleted'})
-
-
-
-
-
-# --------------------- SEND EMAIL ---------------------------
-
-def listenNewPost(event, context):
-    getPosts = postRef.document(event['PostID'])
-    posts = getPosts.get().to_dict()
-    postOwner = posts['userName']
-    print('user')
-    if posts['newPost']:
-        sendEmail(postOwner)
-        getPosts.update({'newPost':False})
-
-def sendEmail(userName):
-    users = userRef.stream()
-    email_list = []
-    for user in users:
-        email = user.to_dict()['email']
-        if email:
-            email_list.append(email)
-    for email in email_list:
-        message = EmailMessage()
-        message['From'] = 'odin12345678909@gmail.com'
-        message['To'] = email,
-        message['Subject'] = 'New post from '+ userName
-        message.set_content('Hey there, check out the new post')
-
-        context = ssl.create_default_context()
-
-        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
-            smtp.login('odin12345678909@gmail.com','kpbkoainxaqtbjez')
-            smtp.sendmail(
-                from_addr= 'odin12345678909@gmail.com',
-                to_addrs=email,
-                msg= message.as_string()
-                )
-    
-            # 'odin12345678909@gmail.com', 'aceexpofficial@gmail.com', message.as_string)
-
 if __name__ == '__main__':
     app.run()
-    # listenNewPost()

@@ -13,13 +13,29 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-      TextEditingController dobcontroller= TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      dobcontroller.text = widget.userModel.dateOfBirth;
+      majorcontroller.text = widget.userModel.major;
+      yeargroupcontroller.text = widget.userModel.yearGroup;
+      favfoodcontroller.text = widget.userModel.favFood;
+      favmoviecontroller.text = widget.userModel.favMovie;
+      residecontroller.text = widget.userModel.campusResidence;
+    });
+  }
+  TextEditingController dobcontroller= TextEditingController();
   TextEditingController majorcontroller= TextEditingController();
   TextEditingController yeargroupcontroller= TextEditingController();
   TextEditingController favfoodcontroller= TextEditingController();
   TextEditingController favmoviecontroller= TextEditingController();
   TextEditingController campuscontroller= TextEditingController();
   TextEditingController residecontroller= TextEditingController();
+
+  
   @override
   Widget build(BuildContext context) {
   return Scaffold(
@@ -46,7 +62,13 @@ class _EditProfileState extends State<EditProfile> {
                             email: widget.userModel.email,
                             campusResidence: widget.userModel.campusResidence,
                             major:majorcontroller.text);
-                            userModel.updateUserDetails(widget.userModel.email);
+                            try{
+                            userModel.updateUserDetails(widget.userModel.email).then((value) => Navigator.of(context).pop());
+                              
+                            }
+                            catch(e){
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('sth went wrong')));
+                            }
                     }, child: Text('SAVE'))
     ]),
   );
